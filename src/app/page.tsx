@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import LoginCards from "./components/loginCards";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import React from "react";
 
 export default function Home() {
