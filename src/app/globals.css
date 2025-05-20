@@ -1,4 +1,8 @@
 @import "tailwindcss";
+ @plugin "flowbite/plugin";
+ /* @plugin "flowbite/plugin"; */
+
+
 
 :root {
   --background: #ffffff;
