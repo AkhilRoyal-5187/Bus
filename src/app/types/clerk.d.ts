@@ -18,5 +18,5 @@ declare module "@clerk/nextjs" {
       sessionId: string | null;
       getToken: () => Promise<string | null>;
     }, req: Request) => Promise<Response | void> | Response | void;
-  }) => any;
+  }) => Response | void; 
 } 
