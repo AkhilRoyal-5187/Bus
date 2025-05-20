@@ -15,7 +15,7 @@ declare module '@clerk/nextjs' {
         };
       };
     }, req: import('next/server').NextRequest) => import('next/server').NextResponse | void;
-  }) => any;
+  }) => import('next/server').NextResponse | void; // <--- FIX IS HERE
 
   export const ClerkProvider: (props: ClerkProviderProps) => JSX.Element;
   export const useAuth: () => {
@@ -32,4 +32,4 @@ declare module '@clerk/nextjs' {
       };
     } | null;
   };
-} 
+}
