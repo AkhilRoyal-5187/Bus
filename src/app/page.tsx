@@ -1,7 +1,6 @@
 // src/app/page.tsx
 "use client";
 
-import Image from 'next/image';
 import LoginCards from "./components/loginCards";
 import { SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import React from "react";
