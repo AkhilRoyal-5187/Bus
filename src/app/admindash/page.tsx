@@ -1,12 +1,38 @@
 "use client"
 import React from "react";
 import * as XLSX from "xlsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// const users = await getUsers() || [];
+// const users = await getUsers() || [];const prisma = new PrismaClient();
+
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  gender: string;
+  aadhar: string;
+  course: string;
+  mobileNo: string;
+  college: string;
+  depo: string;
+}
+
+
+
+
+
 
 
 export default  function AdminDash(){
+
+    const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+  fetch('/api/users')
+    .then((res) => res.json())
+    .then((data) => setUsers(data));
+}, []);
+
 
     // file
     const [file, setFile] = useState<File | null>(null)
@@ -159,39 +185,20 @@ export default  function AdminDash(){
                                         Depo
                                     </th>
                                 </tr>
-                                {/* {users.map((user)=>{
-                                    return(
-                                        <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {user.id}
-                                            </th>
-                                            <td className="px-6 py-4">
-                                                {user.name}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.age}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.gender}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.aadhar}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.course}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.mobileNo}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.college}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {user.depo}
-                                            </td>
-                                        </tr>
-                                    )
-                                })} */}
+                                {users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{user.name}</td>
+                                        <td>{user.age}</td>
+                                        <td>{user.gender}</td>
+                                        <td>{user.aadhar}</td>
+                                        <td>{user.course}</td>
+                                        <td>{user.mobileNo}</td>
+                                        <td>{user.college}</td>
+                                        <td>{user.depo}</td>
+                                    </tr>
+                                    ))}
+
                             </tbody>
                         </table>}
                     </div>
