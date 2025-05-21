@@ -127,7 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   gender: 'gender',
   aadhar: 'aadhar',
   course: 'course',
-  mobile: 'mobile',
+  mobileNo: 'mobileNo',
   college: 'college',
   depo: 'depo'
 };
@@ -137,7 +137,7 @@ exports.Prisma.AdminScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
-  mobile: 'mobile'
+  mobileNo: 'mobileNo'
 };
 
 exports.Prisma.SortOrder = {

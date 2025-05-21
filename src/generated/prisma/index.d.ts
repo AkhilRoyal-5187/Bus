@@ -987,7 +987,7 @@ export namespace Prisma {
     gender: string | null
     aadhar: string | null
     course: string | null
-    mobile: string | null
+    mobileNo: string | null
     college: string | null
     depo: string | null
   }
@@ -999,7 +999,7 @@ export namespace Prisma {
     gender: string | null
     aadhar: string | null
     course: string | null
-    mobile: string | null
+    mobileNo: string | null
     college: string | null
     depo: string | null
   }
@@ -1011,7 +1011,7 @@ export namespace Prisma {
     gender: number
     aadhar: number
     course: number
-    mobile: number
+    mobileNo: number
     college: number
     depo: number
     _all: number
@@ -1033,7 +1033,7 @@ export namespace Prisma {
     gender?: true
     aadhar?: true
     course?: true
-    mobile?: true
+    mobileNo?: true
     college?: true
     depo?: true
   }
@@ -1045,7 +1045,7 @@ export namespace Prisma {
     gender?: true
     aadhar?: true
     course?: true
-    mobile?: true
+    mobileNo?: true
     college?: true
     depo?: true
   }
@@ -1057,7 +1057,7 @@ export namespace Prisma {
     gender?: true
     aadhar?: true
     course?: true
-    mobile?: true
+    mobileNo?: true
     college?: true
     depo?: true
     _all?: true
@@ -1156,7 +1156,7 @@ export namespace Prisma {
     gender: string | null
     aadhar: string | null
     course: string | null
-    mobile: string | null
+    mobileNo: string | null
     college: string | null
     depo: string | null
     _count: UserCountAggregateOutputType | null
@@ -1187,7 +1187,7 @@ export namespace Prisma {
     gender?: boolean
     aadhar?: boolean
     course?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
     college?: boolean
     depo?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1199,7 +1199,7 @@ export namespace Prisma {
     gender?: boolean
     aadhar?: boolean
     course?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
     college?: boolean
     depo?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1211,7 +1211,7 @@ export namespace Prisma {
     gender?: boolean
     aadhar?: boolean
     course?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
     college?: boolean
     depo?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1223,12 +1223,12 @@ export namespace Prisma {
     gender?: boolean
     aadhar?: boolean
     course?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
     college?: boolean
     depo?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "age" | "gender" | "aadhar" | "course" | "mobile" | "college" | "depo", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "age" | "gender" | "aadhar" | "course" | "mobileNo" | "college" | "depo", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1240,7 +1240,7 @@ export namespace Prisma {
       gender: string | null
       aadhar: string | null
       course: string | null
-      mobile: string | null
+      mobileNo: string | null
       college: string | null
       depo: string | null
     }, ExtArgs["result"]["user"]>
@@ -1672,7 +1672,7 @@ export namespace Prisma {
     readonly gender: FieldRef<"User", 'String'>
     readonly aadhar: FieldRef<"User", 'String'>
     readonly course: FieldRef<"User", 'String'>
-    readonly mobile: FieldRef<"User", 'String'>
+    readonly mobileNo: FieldRef<"User", 'String'>
     readonly college: FieldRef<"User", 'String'>
     readonly depo: FieldRef<"User", 'String'>
   }
@@ -2056,7 +2056,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
-    mobile: string | null
+    mobileNo: string | null
   }
 
   export type AdminMaxAggregateOutputType = {
@@ -2064,7 +2064,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
-    mobile: string | null
+    mobileNo: string | null
   }
 
   export type AdminCountAggregateOutputType = {
@@ -2072,7 +2072,7 @@ export namespace Prisma {
     name: number
     email: number
     password: number
-    mobile: number
+    mobileNo: number
     _all: number
   }
 
@@ -2082,7 +2082,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
-    mobile?: true
+    mobileNo?: true
   }
 
   export type AdminMaxAggregateInputType = {
@@ -2090,7 +2090,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
-    mobile?: true
+    mobileNo?: true
   }
 
   export type AdminCountAggregateInputType = {
@@ -2098,7 +2098,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
-    mobile?: true
+    mobileNo?: true
     _all?: true
   }
 
@@ -2179,7 +2179,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
-    mobile: string | null
+    mobileNo: string | null
     _count: AdminCountAggregateOutputType | null
     _min: AdminMinAggregateOutputType | null
     _max: AdminMaxAggregateOutputType | null
@@ -2204,7 +2204,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2212,7 +2212,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2220,7 +2220,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectScalar = {
@@ -2228,10 +2228,10 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
-    mobile?: boolean
+    mobileNo?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "mobile", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "mobileNo", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
@@ -2241,7 +2241,7 @@ export namespace Prisma {
       name: string | null
       email: string | null
       password: string | null
-      mobile: string | null
+      mobileNo: string | null
     }, ExtArgs["result"]["admin"]>
     composites: {}
   }
@@ -2669,7 +2669,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Admin", 'String'>
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
-    readonly mobile: FieldRef<"Admin", 'String'>
+    readonly mobileNo: FieldRef<"Admin", 'String'>
   }
     
 
@@ -3057,7 +3057,7 @@ export namespace Prisma {
     gender: 'gender',
     aadhar: 'aadhar',
     course: 'course',
-    mobile: 'mobile',
+    mobileNo: 'mobileNo',
     college: 'college',
     depo: 'depo'
   };
@@ -3070,7 +3070,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
-    mobile: 'mobile'
+    mobileNo: 'mobileNo'
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
@@ -3160,7 +3160,7 @@ export namespace Prisma {
     gender?: StringNullableFilter<"User"> | string | null
     aadhar?: StringNullableFilter<"User"> | string | null
     course?: StringNullableFilter<"User"> | string | null
-    mobile?: StringNullableFilter<"User"> | string | null
+    mobileNo?: StringNullableFilter<"User"> | string | null
     college?: StringNullableFilter<"User"> | string | null
     depo?: StringNullableFilter<"User"> | string | null
   }
@@ -3172,7 +3172,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     aadhar?: SortOrderInput | SortOrder
     course?: SortOrderInput | SortOrder
-    mobile?: SortOrderInput | SortOrder
+    mobileNo?: SortOrderInput | SortOrder
     college?: SortOrderInput | SortOrder
     depo?: SortOrderInput | SortOrder
   }
@@ -3180,7 +3180,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     aadhar?: string
-    mobile?: string
+    mobileNo?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -3190,7 +3190,7 @@ export namespace Prisma {
     course?: StringNullableFilter<"User"> | string | null
     college?: StringNullableFilter<"User"> | string | null
     depo?: StringNullableFilter<"User"> | string | null
-  }, "id" | "aadhar" | "mobile">
+  }, "id" | "aadhar" | "mobileNo">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3199,7 +3199,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     aadhar?: SortOrderInput | SortOrder
     course?: SortOrderInput | SortOrder
-    mobile?: SortOrderInput | SortOrder
+    mobileNo?: SortOrderInput | SortOrder
     college?: SortOrderInput | SortOrder
     depo?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3219,7 +3219,7 @@ export namespace Prisma {
     gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     aadhar?: StringNullableWithAggregatesFilter<"User"> | string | null
     course?: StringNullableWithAggregatesFilter<"User"> | string | null
-    mobile?: StringNullableWithAggregatesFilter<"User"> | string | null
+    mobileNo?: StringNullableWithAggregatesFilter<"User"> | string | null
     college?: StringNullableWithAggregatesFilter<"User"> | string | null
     depo?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
@@ -3232,7 +3232,7 @@ export namespace Prisma {
     name?: StringNullableFilter<"Admin"> | string | null
     email?: StringNullableFilter<"Admin"> | string | null
     password?: StringNullableFilter<"Admin"> | string | null
-    mobile?: StringNullableFilter<"Admin"> | string | null
+    mobileNo?: StringNullableFilter<"Admin"> | string | null
   }
 
   export type AdminOrderByWithRelationInput = {
@@ -3240,26 +3240,26 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
-    mobile?: SortOrderInput | SortOrder
+    mobileNo?: SortOrderInput | SortOrder
   }
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    mobile?: string
+    mobileNo?: string
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
     name?: StringNullableFilter<"Admin"> | string | null
     password?: StringNullableFilter<"Admin"> | string | null
-  }, "id" | "email" | "mobile">
+  }, "id" | "email" | "mobileNo">
 
   export type AdminOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
-    mobile?: SortOrderInput | SortOrder
+    mobileNo?: SortOrderInput | SortOrder
     _count?: AdminCountOrderByAggregateInput
     _max?: AdminMaxOrderByAggregateInput
     _min?: AdminMinOrderByAggregateInput
@@ -3273,7 +3273,7 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     email?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     password?: StringNullableWithAggregatesFilter<"Admin"> | string | null
-    mobile?: StringNullableWithAggregatesFilter<"Admin"> | string | null
+    mobileNo?: StringNullableWithAggregatesFilter<"Admin"> | string | null
   }
 
   export type UserCreateInput = {
@@ -3283,7 +3283,7 @@ export namespace Prisma {
     gender?: string | null
     aadhar?: string | null
     course?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
     college?: string | null
     depo?: string | null
   }
@@ -3295,7 +3295,7 @@ export namespace Prisma {
     gender?: string | null
     aadhar?: string | null
     course?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
     college?: string | null
     depo?: string | null
   }
@@ -3307,7 +3307,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
     course?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -3319,7 +3319,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
     course?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -3331,7 +3331,7 @@ export namespace Prisma {
     gender?: string | null
     aadhar?: string | null
     course?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
     college?: string | null
     depo?: string | null
   }
@@ -3343,7 +3343,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
     course?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -3355,7 +3355,7 @@ export namespace Prisma {
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
     course?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -3365,7 +3365,7 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     password?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
   }
 
   export type AdminUncheckedCreateInput = {
@@ -3373,7 +3373,7 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     password?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
   }
 
   export type AdminUpdateInput = {
@@ -3381,7 +3381,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminUncheckedUpdateInput = {
@@ -3389,7 +3389,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminCreateManyInput = {
@@ -3397,7 +3397,7 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     password?: string | null
-    mobile?: string | null
+    mobileNo?: string | null
   }
 
   export type AdminUpdateManyMutationInput = {
@@ -3405,7 +3405,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminUncheckedUpdateManyInput = {
@@ -3413,7 +3413,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3469,7 +3469,7 @@ export namespace Prisma {
     gender?: SortOrder
     aadhar?: SortOrder
     course?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
     college?: SortOrder
     depo?: SortOrder
   }
@@ -3485,7 +3485,7 @@ export namespace Prisma {
     gender?: SortOrder
     aadhar?: SortOrder
     course?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
     college?: SortOrder
     depo?: SortOrder
   }
@@ -3497,7 +3497,7 @@ export namespace Prisma {
     gender?: SortOrder
     aadhar?: SortOrder
     course?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
     college?: SortOrder
     depo?: SortOrder
   }
@@ -3563,7 +3563,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
   }
 
   export type AdminMaxOrderByAggregateInput = {
@@ -3571,7 +3571,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
   }
 
   export type AdminMinOrderByAggregateInput = {
@@ -3579,7 +3579,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    mobile?: SortOrder
+    mobileNo?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

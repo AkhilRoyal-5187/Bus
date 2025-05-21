@@ -15,15 +15,15 @@ datasource db {
 }
 
 model User {
-  id      String  @id @default(cuid())
-  name    String?
-  age     Int?
-  gender  String?
-  aadhar  String? @unique
-  course  String?
-  mobile  String? @unique
-  college String?
-  depo    String?
+  id       String  @id @default(cuid())
+  name     String?
+  age      Int?
+  gender   String?
+  aadhar   String? @unique
+  course   String?
+  mobileNo String? @unique
+  college  String?
+  depo     String?
 }
 
 model Admin {
@@ -31,5 +31,5 @@ model Admin {
   name     String?
   email    String? @unique
   password String?
-  mobile   String? @unique
+  mobileNo String? @unique
 }
