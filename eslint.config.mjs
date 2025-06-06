@@ -12,9 +12,14 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    // This object adds or overrides specific ESLint rules
     rules: {
       "@typescript-eslint/no-explicit-any": "off", // Disables the rule for 'any' types
     },
+  },
+  {
+    // Ignore the generated Prisma client files and other generated content
+    ignores: ["src/generated/**"],
   },
 ];
 
