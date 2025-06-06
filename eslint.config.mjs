@@ -15,6 +15,7 @@ const eslintConfig = [
     // This object adds or overrides specific ESLint rules
     rules: {
       "@typescript-eslint/no-explicit-any": "off", // Disables the rule for 'any' types
+      "@typescript-eslint/no-unused-vars": "off", // TO DISABLE UNUSED VARS  for _err (error handling)
     },
   },
   {
