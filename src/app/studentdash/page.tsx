@@ -25,7 +25,7 @@ export default function StudentDash() {
                 const remaining = decoded.expiresAt - now;
                 const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
                 setDaysLeft(days >= 0 ? days : 0);
-            } catch (err) {
+            } catch (_err) {
                 console.error("Invalid token");
             }
         }

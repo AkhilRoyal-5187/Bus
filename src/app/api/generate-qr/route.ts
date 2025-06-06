@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const qrImageUrl = await QRCode.toDataURL(token);
 
     return NextResponse.json({ token, qrImageUrl, expiresAt });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: "QR generation failed" }, { status: 500 });
   }
 }
