@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
+import { motion } from "framer-motion";
 
 interface User {
   id?: string;
@@ -22,7 +23,6 @@ export default function AdminDash() {
   const [isUploading, setIsUploading] = useState(false);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
 
-  // Load users on mount
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -30,16 +30,14 @@ export default function AdminDash() {
   async function fetchUsers() {
     try {
       setIsLoadingUsers(true);
-      // Force no-cache to get fresh data always
       const res = await fetch("/api/users", { cache: "no-store" });
 
       if (!res.ok) {
         throw new Error(`Failed to fetch users: ${res.statusText}`);
       }
       const data = await res.json();
-      console.log("Fetched users from DB:", data);
       setUsers(data);
-      setPreviewUsers([]); // clear preview on load DB
+      setPreviewUsers([]);
     } catch (error) {
       console.error("Fetch users error:", error);
       alert("Failed to load users from DB. Check console.");
@@ -48,7 +46,6 @@ export default function AdminDash() {
     }
   }
 
-  // Key mapping for Excel to User model
   const keyMap: Record<string, keyof User> = {
     name: "name",
     age: "age",
@@ -136,7 +133,7 @@ export default function AdminDash() {
       const result = await res.json();
       alert(`✅ Uploaded ${result.count} users`);
 
-      await fetchUsers(); // Refresh DB data after upload
+      await fetchUsers();
       setPreviewUsers([]);
       setFile(null);
     } catch (error) {
@@ -152,52 +149,108 @@ export default function AdminDash() {
     setFile(null);
   }
 
-  return (
-    <div className="flex justify-center gap-8">
-      <div className="w-full max-w-7xl px-4">
-        <label
-          htmlFor="file_input"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Upload Excel File
-        </label>
-        <input
-          id="file_input"
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={(e) => {
-            const selected = e.target.files?.[0] || null;
-            setFile(selected);
-            if (selected) setTimeout(() => previewData(), 300);
-          }}
-          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-        />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-          Excel fields: name, age, gender, aadhar, course, mobile no, college,
-          depo
-        </p>
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
-        <div className="flex justify-center mt-6 gap-5 font-semibold text-white">
-          <button
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  };
+
+  const tableWrapperVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const rowVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
+  const tbodyVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  return (
+    <div className="min-h-screen min-w-screen bg-black flex items-center justify-center px-4 py-8">
+      <motion.div
+        className="w-full max-w-7xl px-4 py-8 bg-black text-white rounded-xl shadow-lg"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
+          <label
+            htmlFor="file_input"
+            className="block mb-2 text-sm font-medium text-white"
+          >
+            Upload Excel File
+          </label>
+          <input
+            id="file_input"
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={(e) => {
+              const selected = e.target.files?.[0] || null;
+              setFile(selected);
+              if (selected) setTimeout(() => previewData(), 300);
+            }}
+            className="block w-full text-white border border-gray-600 rounded-lg cursor-pointer bg-gray-700 focus:outline-none placeholder-gray-400"
+          />
+          <p className="mt-1 text-sm text-gray-400">
+            Excel fields: name, age, gender, aadhar, course, mobile no, college,
+            depo
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="flex flex-wrap justify-center mt-6 gap-5 font-semibold text-white"
+          variants={itemVariants}
+        >
+          <motion.button
             onClick={previewData}
             className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Preview Data
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={saveToDB}
             className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-xl"
             disabled={isUploading}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {isUploading ? "Uploading..." : "Save to DB"}
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={resetPreview}
             className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Delete Preview
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={fetchUsers}
             disabled={isLoadingUsers}
             className={`px-4 py-2 rounded-xl ${
@@ -205,20 +258,21 @@ export default function AdminDash() {
                 ? "bg-gray-500 cursor-not-allowed"
                 : "bg-gray-700 hover:bg-gray-800"
             }`}
+            whileHover={isLoadingUsers ? {} : { scale: 1.05 }}
+            whileTap={isLoadingUsers ? {} : { scale: 0.95 }}
           >
             {isLoadingUsers ? "Loading..." : "Load Current Data"}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        {/* Preview Table */}
         {previewUsers.length > 0 && (
-          <div className="mt-10">
-            <h3 className="font-bold text-lg mb-2">
+          <motion.div className="mt-10" variants={tableWrapperVariants}>
+            <h3 className="font-bold text-lg mb-2 text-white">
               Preview Data ({previewUsers.length})
             </h3>
-            <div className="overflow-x-auto border border-gray-300 rounded-md">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <div className="overflow-x-auto border border-gray-700 rounded-md">
+              <table className="w-full text-sm text-left text-gray-300">
+                <thead className="text-xs text-gray-200 uppercase bg-gray-800">
                   <tr>
                     {[
                       "Name",
@@ -236,33 +290,32 @@ export default function AdminDash() {
                     ))}
                   </tr>
                 </thead>
-                <tbody>
+                <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
                   {previewUsers.map((user, idx) => (
-                    <tr key={idx} className="bg-white dark:bg-gray-800">
-                      <td className="px-6 py-3">{user.name}</td>
-                      <td className="px-6 py-3">{user.age}</td>
-                      <td className="px-6 py-3">{user.gender}</td>
-                      <td className="px-6 py-3">{user.aadhar}</td>
-                      <td className="px-6 py-3">{user.course}</td>
-                      <td className="px-6 py-3">{user.mobileNo}</td>
-                      <td className="px-6 py-3">{user.college}</td>
-                      <td className="px-6 py-3">{user.depo}</td>
-                    </tr>
+                    <motion.tr key={idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
+                      <td className="px-6 py-3 text-white">{user.name}</td>
+                      <td className="px-6 py-3 text-white">{user.age}</td>
+                      <td className="px-6 py-3 text-white">{user.gender}</td>
+                      <td className="px-6 py-3 text-white">{user.aadhar}</td>
+                      <td className="px-6 py-3 text-white">{user.course}</td>
+                      <td className="px-6 py-3 text-white">{user.mobileNo}</td>
+                      <td className="px-6 py-3 text-white">{user.college}</td>
+                      <td className="px-6 py-3 text-white">{user.depo}</td>
+                    </motion.tr>
                   ))}
-                </tbody>
+                </motion.tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
         )}
 
-        {/* DB Users Table */}
-        <div className="mt-10">
-          <h3 className="font-bold text-lg mb-2">
+        <motion.div className="mt-10" variants={tableWrapperVariants}>
+          <h3 className="font-bold text-lg mb-2 text-white">
             All Users in Database ({users.length})
           </h3>
-          <div className="overflow-x-auto border border-gray-300 rounded-md">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div className="overflow-x-auto border border-gray-700 rounded-md">
+            <table className="w-full text-sm text-left text-gray-300">
+              <thead className="text-xs text-gray-200 uppercase bg-gray-800">
                 <tr>
                   {[
                     "Id",
@@ -280,34 +333,34 @@ export default function AdminDash() {
                     </th>
                   ))}
                 </tr>
-                          </thead>
-          <tbody>
-            {users.length === 0 ? (
-              <tr>
-                <td colSpan={9} className="px-6 py-3 text-center">
-                  No data available
-                </td>
-              </tr>
-            ) : (
-              users.map((user, idx) => (
-                <tr key={user.id ?? idx}>
-                  <td className="px-6 py-3">{user.id}</td>
-                  <td className="px-6 py-3">{user.name}</td>
-                  <td className="px-6 py-3">{user.age}</td>
-                  <td className="px-6 py-3">{user.gender}</td>
-                  <td className="px-6 py-3">{user.aadhar}</td>
-                  <td className="px-6 py-3">{user.course}</td>
-                  <td className="px-6 py-3">{user.mobileNo}</td>
-                  <td className="px-6 py-3">{user.college}</td>
-                  <td className="px-6 py-3">{user.depo}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
+                {users.length === 0 ? (
+                  <motion.tr variants={rowVariants}>
+                    <td colSpan={9} className="px-6 py-3 text-center text-white">
+                      No data available
+                    </td>
+                  </motion.tr>
+                ) : (
+                  users.map((user, idx) => (
+                    <motion.tr key={user.id ?? idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
+                      <td className="px-6 py-3 text-white">{user.id}</td>
+                      <td className="px-6 py-3 text-white">{user.name}</td>
+                      <td className="px-6 py-3 text-white">{user.age}</td>
+                      <td className="px-6 py-3 text-white">{user.gender}</td>
+                      <td className="px-6 py-3 text-white">{user.aadhar}</td>
+                      <td className="px-6 py-3 text-white">{user.course}</td>
+                      <td className="px-6 py-3 text-white">{user.mobileNo}</td>
+                      <td className="px-6 py-3 text-white">{user.college}</td>
+                      <td className="px-6 py-3 text-white">{user.depo}</td>
+                    </motion.tr>
+                  ))
+                )}
+              </motion.tbody>
+            </table>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
-  </div>
-</div>
   );
 }

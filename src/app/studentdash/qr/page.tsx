@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code"; 
+import QRCode from "react-qr-code";
+import { motion } from "framer-motion";
 
 export default function QRPage() {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -35,26 +37,54 @@ export default function QRPage() {
       setUserId(decoded.userId);
     } catch (err) {
       console.error("Invalid token", err);
+    } finally {
+      setTimeout(() => setLoading(false), 1000); // Simulate short delay for animation
     }
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black text-white">
+        <motion.div
+          className="w-16 h-16 border-4 border-t-transparent border-white rounded-full animate-spin"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-6">
+    <motion.div
+      className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-6"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       {daysLeft !== null && token ? (
         <>
-          <p className="text-2xl mb-4">
+          <motion.p className="text-2xl mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
             Pass valid for {daysLeft} more day{daysLeft !== 1 ? "s" : ""}
-          </p>
-          <p className="mb-8 text-gray-400">Issued to: {userId}</p>
-
-          {/* QR code using react-qr-code */}
-          <div className="bg-white p-4 rounded">
-            <QRCode value={`http://localhost:3000/studentdash/qr?token=${encodeURIComponent(token)}`} size={200} />
-          </div>
+          </motion.p>
+          <motion.p className="mb-8 text-gray-400" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+            Issued to: {userId}
+          </motion.p>
+          <motion.div
+            className="bg-white p-4 rounded shadow-xl"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+          >
+            <QRCode
+              value={`http://localhost:3000/studentdash/qr?token=${encodeURIComponent(token)}`}
+              size={200}
+            />
+          </motion.div>
         </>
       ) : (
-        <p>Loading QR details...</p>
+        <p>Token invalid or not found.</p>
       )}
-    </div>
+    </motion.div>
   );
 }
