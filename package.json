@@ -21,15 +21,15 @@
     "react-dom": "^19.0.0",
     "react-qr-code": "^2.0.15",
     "xlsx": "^0.18.5",
-    "@tailwindcss/postcss": "^4"
+    "@tailwindcss/postcss": "^4",   
+    "@types/node": "^20.17.50",      
+    "@types/react": "^19"            
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^20.17.50",
     "@types/qrcode": "^1.5.5",
     "@types/qrcode.react": "^1.0.5",
-    "@types/react": "^19",
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
