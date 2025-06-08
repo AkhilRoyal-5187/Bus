@@ -20,11 +20,11 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-qr-code": "^2.0.15",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "@tailwindcss/postcss": "^4"  // <-- Moved here
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20.17.50",
     "@types/qrcode": "^1.5.5",
