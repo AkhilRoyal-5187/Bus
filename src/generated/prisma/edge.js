@@ -154,6 +154,10 @@ const config = {
         "fromEnvVar": null,
         "value": "debian-openssl-3.0.x",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -161,7 +165,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.8.2",
@@ -170,7 +175,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -179,8 +184,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       String  @id @default(cuid())\n  name     String?\n  age      Int?\n  gender   String?\n  aadhar   String? @unique\n  course   String?\n  mobileNo String? @unique\n  college  String?\n  depo     String?\n}\n\nmodel Admin {\n  id       String  @id @default(cuid())\n  name     String?\n  email    String? @unique\n  password String?\n  mobileNo String? @unique\n}\n",
-  "inlineSchemaHash": "1589aa84f0e6200d9904110a18e8d210de18be508613f5d47e86c2e1be5127d8",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"] // Keep 3.0.x as is\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       String  @id @default(cuid())\n  name     String?\n  age      Int?\n  gender   String?\n  aadhar   String? @unique\n  course   String?\n  mobileNo String? @unique\n  college  String?\n  depo     String?\n}\n\nmodel Admin {\n  id       String  @id @default(cuid())\n  name     String?\n  email    String? @unique\n  password String?\n  mobileNo String? @unique\n}\n",
+  "inlineSchemaHash": "820c4dde2a43d1da7de3415a698444b87b0447f0f37b5076c48ce6a6b240226e",
   "copyEngine": true
 }
 config.dirname = '/'
