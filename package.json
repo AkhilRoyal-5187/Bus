@@ -21,7 +21,7 @@
     "react-dom": "^19.0.0",
     "react-qr-code": "^2.0.15",
     "xlsx": "^0.18.5",
-    "@tailwindcss/postcss": "^4"  // <-- Moved here
+    "@tailwindcss/postcss": "^4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
