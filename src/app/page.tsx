@@ -1,16 +1,13 @@
 "use client";
 
 import LoginCards from "./components/loginCards";
-import {
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -19,20 +16,14 @@ export default function Home() {
       className="relative grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 pb-20 gap-8 sm:p-8 sm:pb-20 sm:gap-16 font-[family-name:var(--font-geist-sans)] bg-black"
     >
       <div className="absolute top-4 right-4 z-10">
-        <SignedOut>
-          <SignUpButton mode="modal">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600 shadow-md transition-colors duration-200"
-            >
-              Sign Up
-            </motion.button>
-          </SignUpButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => router.push('/signup')}
+          className="rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600 shadow-md transition-colors duration-200"
+        >
+          Sign Up
+        </motion.button>
       </div>
 
       <motion.img

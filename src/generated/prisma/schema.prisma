@@ -1,13 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
   output        = "../src/generated/prisma"
-  binaryTargets = ["native", "rhel-openssl-3.0.x"] // Keep 3.0.x as is
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -16,21 +10,30 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String?
-  age      Int?
-  gender   String?
-  aadhar   String? @unique
-  course   String?
-  mobileNo String? @unique
-  college  String?
-  depo     String?
+  id         String   @id @default(cuid())
+  name       String?
+  email      String   @unique
+  password   String
+  rollNumber String?  @unique
+  age        Int?
+  gender     String?
+  aadhar     String?  @unique
+  course     String?
+  college    String?
+  depo       String?
+  mobileNo   String?  @unique
+  role       String   @default("student")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Admin {
-  id       String  @id @default(cuid())
-  name     String?
-  email    String? @unique
-  password String?
-  mobileNo String? @unique
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  mobileNo  String?  @unique
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

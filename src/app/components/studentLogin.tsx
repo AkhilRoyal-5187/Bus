@@ -1,14 +1,59 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function StudentLogin() {
     const router = useRouter();
-    const redirect = (e: React.FormEvent) => {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        router.push("/studentdash");
+        setError("");
+        setLoading(true);
+
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    role: "student",
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Login failed");
+            }
+
+            // Store the token in a cookie
+            document.cookie = `token=${data.token}; path=/`;
+
+            // Redirect to student dashboard
+            router.push("/studentdash");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Login failed");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const containerVariants = {
@@ -39,27 +84,45 @@ export default function StudentLogin() {
                 animate="visible"
             >
                 <motion.h1 variants={itemVariants} className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gray-900">Student Login</motion.h1>
-                <motion.form onSubmit={redirect} className="flex flex-col gap-6">
+
+                {error && (
+                    <motion.div
+                        variants={itemVariants}
+                        className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                        role="alert"
+                    >
+                        <span className="block sm:inline">{error}</span>
+                    </motion.div>
+                )}
+
+                <motion.form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <motion.input
                         variants={itemVariants}
-                        type="text"
-                        placeholder="Username"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Email"
+                        required
                         className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <motion.input
                         variants={itemVariants}
                         type="password"
-                        placeholder="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        placeholder="Password (Roll Number)"
+                        required
                         className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <motion.button
                         variants={itemVariants}
                         type="submit"
-                        className="bg-blue-600 text-white rounded-lg py-3 font-semibold hover:bg-blue-500 transition"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        disabled={loading}
+                        className="bg-blue-600 text-white rounded-lg py-3 font-semibold hover:bg-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                     </motion.button>
                 </motion.form>
             </motion.div>

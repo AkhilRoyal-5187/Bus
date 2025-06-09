@@ -1,156 +1,104 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import * as XLSX from "xlsx";
 import { motion } from "framer-motion";
+import * as XLSX from "xlsx";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 interface User {
-  id?: string;
-  name?: string;
-  age?: number | null;
-  gender?: string;
-  aadhar?: string;
-  course?: string;
-  mobileNo?: string;
-  college?: string;
-  depo?: string;
+  id: string;
+  name: string | null;
+  age: number | null;
+  gender: string | null;
+  aadhar: string | null;
+  course: string | null;
+  mobileNo: string | null;
+  college: string | null;
+  depo: string | null;
+  email: string;
+  rollNumber: string | null;
 }
 
 export default function AdminDash() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [previewUsers, setPreviewUsers] = useState<User[]>([]);
   const [file, setFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [previewData, setPreviewData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  async function fetchUsers() {
-    try {
-      setIsLoadingUsers(true);
-      const res = await fetch("/api/users", { cache: "no-store" });
-
-      if (!res.ok) {
-        throw new Error(`Failed to fetch users: ${res.statusText}`);
-      }
-      const data = await res.json();
-      setUsers(data);
-      setPreviewUsers([]);
-    } catch (error) {
-      console.error("Fetch users error:", error);
-      alert("Failed to load users from DB. Check console.");
-    } finally {
-      setIsLoadingUsers(false);
-    }
-  }
-
-  const keyMap: Record<string, keyof User> = {
-    name: "name",
-    age: "age",
-    gender: "gender",
-    aadhar: "aadhar",
-    "mobile no": "mobileNo",
-    mobile: "mobileNo",
-    course: "course",
-    college: "college",
-    depo: "depo",
-  };
-
-  function mapExcelKeysToModel(row: any): User {
-    const normalized: Partial<User> = {};
-
-    Object.keys(row).forEach((key) => {
-      const lower = key.toLowerCase().trim();
-      const mappedKey = keyMap[lower];
-      if (mappedKey) {
-        normalized[mappedKey] = row[key];
-      }
-    });
-
-    return {
-      name: normalized.name || "",
-      age: normalized.age ? Number(normalized.age) : null,
-      gender: normalized.gender || "",
-      aadhar:
-        normalized.aadhar !== undefined && normalized.aadhar !== null
-          ? String(normalized.aadhar)
-          : "",
-      course: normalized.course || "",
-      mobileNo: normalized.mobileNo ? String(normalized.mobileNo) : "",
-      college: normalized.college || "",
-      depo: normalized.depo || "",
-    };
-  }
-
-  function previewData() {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.name.match(/\.(xlsx|xls)$/i)) {
-      alert("Please upload a valid Excel file (.xlsx or .xls)");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const data = e.target?.result;
-      try {
-        const workbook = XLSX.read(data, { type: "binary" });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-
-        const mapped = json.map(mapExcelKeysToModel);
-        setPreviewUsers(mapped);
-      } catch (err) {
-        console.error("Error parsing Excel:", err);
-        alert("Failed to parse Excel. Please check the file format.");
-      }
-    };
-    reader.readAsBinaryString(file);
-  }
-
-  async function saveToDB() {
-    if (previewUsers.length === 0) {
-      alert("No data to upload");
-      return;
-    }
+    setFile(file);
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
     try {
-      setIsUploading(true);
-      const res = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(previewUsers),
-      });
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const data = new Uint8Array(e.target?.result as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: "array" });
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Upload failed: ${errorText}`);
-      }
+          // Preview the data
+          setPreviewData(jsonData);
 
-      const result = await res.json();
-      alert(`✅ Uploaded ${result.count} users`);
+          // Process and upload the data
+          const response = await fetch("/api/users/bulk", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
 
-      await fetchUsers();
-      setPreviewUsers([]);
-      setFile(null);
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.error || "Failed to upload data");
+          }
+
+          setSuccess("Data uploaded successfully!");
+          fetchUsers(); // Refresh the user list
+        } catch (error) {
+          setError(error instanceof Error ? error.message : "Failed to process file");
+        }
+      };
+
+      reader.onerror = () => {
+        setError("Failed to read file");
+      };
+
+      reader.readAsArrayBuffer(file);
     } catch (error) {
-      console.error("Upload error:", error);
-      alert("❌ Upload failed. See console for details.");
+      setError("Failed to process file");
     } finally {
-      setIsUploading(false);
+      setLoading(false);
     }
-  }
-
-  function resetPreview() {
-    setPreviewUsers([]);
-    setFile(null);
-  }
+  };
 
   const containerVariants = {
-    hidden: { opacity: 0, scale: 0.98 },
+    hidden: { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -168,29 +116,8 @@ export default function AdminDash() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
   };
 
-  const tableWrapperVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
-
-  const rowVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-
-  const tbodyVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
   return (
-    <div className="min-h-screen min-w-screen bg-black flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
       <motion.div
         className="w-full max-w-7xl px-4 py-8 bg-black text-white rounded-xl shadow-lg"
         variants={containerVariants}
@@ -208,108 +135,80 @@ export default function AdminDash() {
             id="file_input"
             type="file"
             accept=".xlsx, .xls"
-            onChange={(e) => {
-              const selected = e.target.files?.[0] || null;
-              setFile(selected);
-              if (selected) setTimeout(() => previewData(), 300);
-            }}
+            onChange={handleFileUpload}
             className="block w-full text-white border border-gray-600 rounded-lg cursor-pointer bg-gray-700 focus:outline-none placeholder-gray-400"
           />
           <p className="mt-1 text-sm text-gray-400">
             Excel fields: name, age, gender, aadhar, course, mobile no, college,
-            depo
+            depo, email, rollNumber
           </p>
         </motion.div>
 
-        <motion.div
-          className="flex flex-wrap justify-center mt-6 gap-5 font-semibold text-white"
-          variants={itemVariants}
-        >
-          <motion.button
-            onClick={previewData}
-            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {error && (
+          <motion.div
+            variants={itemVariants}
+            className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
           >
-            Preview Data
-          </motion.button>
-          <motion.button
-            onClick={saveToDB}
-            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-xl"
-            disabled={isUploading}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isUploading ? "Uploading..." : "Save to DB"}
-          </motion.button>
-          <motion.button
-            onClick={resetPreview}
-            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Delete Preview
-          </motion.button>
-          <motion.button
-            onClick={fetchUsers}
-            disabled={isLoadingUsers}
-            className={`px-4 py-2 rounded-xl ${
-              isLoadingUsers
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gray-700 hover:bg-gray-800"
-            }`}
-            whileHover={isLoadingUsers ? {} : { scale: 1.05 }}
-            whileTap={isLoadingUsers ? {} : { scale: 0.95 }}
-          >
-            {isLoadingUsers ? "Loading..." : "Load Current Data"}
-          </motion.button>
-        </motion.div>
+            <span className="block sm:inline">{error}</span>
+          </motion.div>
+        )}
 
-        {previewUsers.length > 0 && (
-          <motion.div className="mt-10" variants={tableWrapperVariants}>
+        {success && (
+          <motion.div
+            variants={itemVariants}
+            className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline">{success}</span>
+          </motion.div>
+        )}
+
+        {loading && (
+          <motion.div
+            variants={itemVariants}
+            className="mt-4 text-center text-gray-400"
+          >
+            Processing...
+          </motion.div>
+        )}
+
+        {previewData.length > 0 && (
+          <motion.div variants={itemVariants} className="mt-8">
             <h3 className="font-bold text-lg mb-2 text-white">
-              Preview Data ({previewUsers.length})
+              Preview Data ({previewData.length} rows)
             </h3>
             <div className="overflow-x-auto border border-gray-700 rounded-md">
               <table className="w-full text-sm text-left text-gray-300">
                 <thead className="text-xs text-gray-200 uppercase bg-gray-800">
                   <tr>
-                    {[
-                      "Name",
-                      "Age",
-                      "Gender",
-                      "Aadhar",
-                      "Course",
-                      "Mobile No",
-                      "College",
-                      "Depo",
-                    ].map((header) => (
+                    {Object.keys(previewData[0]).map((header) => (
                       <th key={header} className="px-6 py-3">
                         {header}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
-                  {previewUsers.map((user, idx) => (
-                    <motion.tr key={idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
-                      <td className="px-6 py-3 text-white">{user.name}</td>
-                      <td className="px-6 py-3 text-white">{user.age}</td>
-                      <td className="px-6 py-3 text-white">{user.gender}</td>
-                      <td className="px-6 py-3 text-white">{user.aadhar}</td>
-                      <td className="px-6 py-3 text-white">{user.course}</td>
-                      <td className="px-6 py-3 text-white">{user.mobileNo}</td>
-                      <td className="px-6 py-3 text-white">{user.college}</td>
-                      <td className="px-6 py-3 text-white">{user.depo}</td>
-                    </motion.tr>
+                <tbody>
+                  {previewData.slice(0, 5).map((row, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-gray-700 hover:bg-gray-800"
+                    >
+                      {Object.values(row).map((value: any, i) => (
+                        <td key={i} className="px-6 py-4">
+                          {value?.toString() || ""}
+                        </td>
+                      ))}
+                    </tr>
                   ))}
-                </motion.tbody>
+                </tbody>
               </table>
             </div>
           </motion.div>
         )}
 
-        <motion.div className="mt-10" variants={tableWrapperVariants}>
+        <motion.div variants={itemVariants} className="mt-8">
           <h3 className="font-bold text-lg mb-2 text-white">
             All Users in Database ({users.length})
           </h3>
@@ -320,6 +219,8 @@ export default function AdminDash() {
                   {[
                     "Id",
                     "Name",
+                    "Email",
+                    "Roll Number",
                     "Age",
                     "Gender",
                     "Aadhar",
@@ -334,29 +235,26 @@ export default function AdminDash() {
                   ))}
                 </tr>
               </thead>
-              <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
-                {users.length === 0 ? (
-                  <motion.tr variants={rowVariants}>
-                    <td colSpan={9} className="px-6 py-3 text-center text-white">
-                      No data available
-                    </td>
-                  </motion.tr>
-                ) : (
-                  users.map((user, idx) => (
-                    <motion.tr key={user.id ?? idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
-                      <td className="px-6 py-3 text-white">{user.id}</td>
-                      <td className="px-6 py-3 text-white">{user.name}</td>
-                      <td className="px-6 py-3 text-white">{user.age}</td>
-                      <td className="px-6 py-3 text-white">{user.gender}</td>
-                      <td className="px-6 py-3 text-white">{user.aadhar}</td>
-                      <td className="px-6 py-3 text-white">{user.course}</td>
-                      <td className="px-6 py-3 text-white">{user.mobileNo}</td>
-                      <td className="px-6 py-3 text-white">{user.college}</td>
-                      <td className="px-6 py-3 text-white">{user.depo}</td>
-                    </motion.tr>
-                  ))
-                )}
-              </motion.tbody>
+              <tbody>
+                {users.map((user) => (
+                  <tr
+                    key={user.id}
+                    className="border-b border-gray-700 hover:bg-gray-800"
+                  >
+                    <td className="px-6 py-4">{user.id}</td>
+                    <td className="px-6 py-4">{user.name}</td>
+                    <td className="px-6 py-4">{user.email}</td>
+                    <td className="px-6 py-4">{user.rollNumber}</td>
+                    <td className="px-6 py-4">{user.age}</td>
+                    <td className="px-6 py-4">{user.gender}</td>
+                    <td className="px-6 py-4">{user.aadhar}</td>
+                    <td className="px-6 py-4">{user.course}</td>
+                    <td className="px-6 py-4">{user.mobileNo}</td>
+                    <td className="px-6 py-4">{user.college}</td>
+                    <td className="px-6 py-4">{user.depo}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </motion.div>
