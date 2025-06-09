@@ -1,34 +1,35 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../../../generated/prisma";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
+const JWT_SECRET = process.env.JWT_SECRET;
 
-export async function POST(req: Request) {
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is not set");
+}
+
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
-    const { role, name, email, password, mobileNo, ...otherFields } = body;
+    const body = await request.json();
+    const { name, email, password } = body;
 
-    // Validate required fields
-    if (!email || !password || !name) {
+    if (!name || !email || !password) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Name, email and password are required" },
         { status: 400 }
       );
     }
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
+    // Check if admin already exists
     const existingAdmin = await prisma.admin.findUnique({
       where: { email },
     });
 
-    if (existingUser || existingAdmin) {
+    if (existingAdmin) {
       return NextResponse.json(
-        { error: "User already exists" },
+        { error: "Admin with this email already exists" },
         { status: 400 }
       );
     }
@@ -36,40 +37,36 @@ export async function POST(req: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user based on role
-    if (role === "student") {
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          mobileNo,
-          ...otherFields,
-        },
-      });
-      return NextResponse.json(
-        { message: "Student created successfully", user },
-        { status: 201 }
-      );
-    } else if (role === "admin") {
-      const admin = await prisma.admin.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          mobileNo,
-        },
-      });
-      return NextResponse.json(
-        { message: "Admin created successfully", admin },
-        { status: 201 }
-      );
-    }
+    // Create admin
+    const admin = await prisma.admin.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
 
-    return NextResponse.json(
-      { error: "Invalid role" },
-      { status: 400 }
+    // Generate JWT token
+    const token = jwt.sign(
+      { 
+        userId: admin.id,
+        email: admin.email,
+        role: "admin"
+      },
+      JWT_SECRET as string,
+      { expiresIn: "24h" }
     );
+
+    return NextResponse.json({
+      message: "Admin created successfully",
+      user: {
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        role: "admin"
+      },
+      token
+    });
   } catch (error) {
     console.error("Signup error:", error);
     return NextResponse.json(
