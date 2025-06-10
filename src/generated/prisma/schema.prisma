@@ -12,9 +12,6 @@ datasource db {
 model User {
   id         String   @id @default(cuid())
   name       String?
-  email      String   @unique
-  password   String
-  rollNumber String?  @unique
   age        Int?
   gender     String?
   aadhar     String?  @unique
@@ -22,8 +19,11 @@ model User {
   college    String?
   depo       String?
   mobileNo   String?  @unique
-  role       String   @default("student")
   createdAt  DateTime @default(now())
+  email      String   @unique
+  password   String
+  role       String   @default("student")
+  rollNumber String?  @unique
   updatedAt  DateTime @updatedAt
 }
 
@@ -33,7 +33,7 @@ model Admin {
   email     String   @unique
   password  String
   mobileNo  String?  @unique
-  role      String   @default("admin")
   createdAt DateTime @default(now())
+  role      String   @default("admin")
   updatedAt DateTime @updatedAt
 }

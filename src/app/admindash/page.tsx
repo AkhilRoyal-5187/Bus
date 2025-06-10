@@ -88,7 +88,7 @@ export default function AdminDash() {
       const res = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ users: previewUsers }),
+        body: JSON.stringify(previewUsers),
       });
 
       if (!res.ok) throw new Error("Upload failed");
@@ -161,7 +161,7 @@ export default function AdminDash() {
             onChange={(e) => {
               const selected = e.target.files?.[0] || null;
               setFile(selected);
-              if (selected) setTimeout(() => previewData(), 300);
+              if (selected) previewData();
             }}
             className="block w-full text-white border border-gray-600 rounded-lg cursor-pointer bg-gray-700 focus:outline-none placeholder-gray-400"
           />

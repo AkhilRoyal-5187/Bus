@@ -226,8 +226,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -983,9 +983,6 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     name: string | null
-    email: string | null
-    password: string | null
-    rollNumber: string | null
     age: number | null
     gender: string | null
     aadhar: string | null
@@ -993,17 +990,17 @@ export namespace Prisma {
     college: string | null
     depo: string | null
     mobileNo: string | null
-    role: string | null
     createdAt: Date | null
+    email: string | null
+    password: string | null
+    role: string | null
+    rollNumber: string | null
     updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    email: string | null
-    password: string | null
-    rollNumber: string | null
     age: number | null
     gender: string | null
     aadhar: string | null
@@ -1011,17 +1008,17 @@ export namespace Prisma {
     college: string | null
     depo: string | null
     mobileNo: string | null
-    role: string | null
     createdAt: Date | null
+    email: string | null
+    password: string | null
+    role: string | null
+    rollNumber: string | null
     updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     name: number
-    email: number
-    password: number
-    rollNumber: number
     age: number
     gender: number
     aadhar: number
@@ -1029,8 +1026,11 @@ export namespace Prisma {
     college: number
     depo: number
     mobileNo: number
-    role: number
     createdAt: number
+    email: number
+    password: number
+    role: number
+    rollNumber: number
     updatedAt: number
     _all: number
   }
@@ -1047,9 +1047,6 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    password?: true
-    rollNumber?: true
     age?: true
     gender?: true
     aadhar?: true
@@ -1057,17 +1054,17 @@ export namespace Prisma {
     college?: true
     depo?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    email?: true
+    password?: true
+    role?: true
+    rollNumber?: true
     updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    password?: true
-    rollNumber?: true
     age?: true
     gender?: true
     aadhar?: true
@@ -1075,17 +1072,17 @@ export namespace Prisma {
     college?: true
     depo?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    email?: true
+    password?: true
+    role?: true
+    rollNumber?: true
     updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    password?: true
-    rollNumber?: true
     age?: true
     gender?: true
     aadhar?: true
@@ -1093,8 +1090,11 @@ export namespace Prisma {
     college?: true
     depo?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    email?: true
+    password?: true
+    role?: true
+    rollNumber?: true
     updatedAt?: true
     _all?: true
   }
@@ -1188,9 +1188,6 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     name: string | null
-    email: string
-    password: string
-    rollNumber: string | null
     age: number | null
     gender: string | null
     aadhar: string | null
@@ -1198,8 +1195,11 @@ export namespace Prisma {
     college: string | null
     depo: string | null
     mobileNo: string | null
-    role: string
     createdAt: Date
+    email: string
+    password: string
+    role: string
+    rollNumber: string | null
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1225,9 +1225,6 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    email?: boolean
-    password?: boolean
-    rollNumber?: boolean
     age?: boolean
     gender?: boolean
     aadhar?: boolean
@@ -1235,17 +1232,17 @@ export namespace Prisma {
     college?: boolean
     depo?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    rollNumber?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    email?: boolean
-    password?: boolean
-    rollNumber?: boolean
     age?: boolean
     gender?: boolean
     aadhar?: boolean
@@ -1253,17 +1250,17 @@ export namespace Prisma {
     college?: boolean
     depo?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    rollNumber?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    email?: boolean
-    password?: boolean
-    rollNumber?: boolean
     age?: boolean
     gender?: boolean
     aadhar?: boolean
@@ -1271,17 +1268,17 @@ export namespace Prisma {
     college?: boolean
     depo?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    rollNumber?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     name?: boolean
-    email?: boolean
-    password?: boolean
-    rollNumber?: boolean
     age?: boolean
     gender?: boolean
     aadhar?: boolean
@@ -1289,12 +1286,15 @@ export namespace Prisma {
     college?: boolean
     depo?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    rollNumber?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "rollNumber" | "age" | "gender" | "aadhar" | "course" | "college" | "depo" | "mobileNo" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "age" | "gender" | "aadhar" | "course" | "college" | "depo" | "mobileNo" | "createdAt" | "email" | "password" | "role" | "rollNumber" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1302,9 +1302,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string | null
-      email: string
-      password: string
-      rollNumber: string | null
       age: number | null
       gender: string | null
       aadhar: string | null
@@ -1312,8 +1309,11 @@ export namespace Prisma {
       college: string | null
       depo: string | null
       mobileNo: string | null
-      role: string
       createdAt: Date
+      email: string
+      password: string
+      role: string
+      rollNumber: string | null
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1740,9 +1740,6 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
-    readonly email: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
-    readonly rollNumber: FieldRef<"User", 'String'>
     readonly age: FieldRef<"User", 'Int'>
     readonly gender: FieldRef<"User", 'String'>
     readonly aadhar: FieldRef<"User", 'String'>
@@ -1750,8 +1747,11 @@ export namespace Prisma {
     readonly college: FieldRef<"User", 'String'>
     readonly depo: FieldRef<"User", 'String'>
     readonly mobileNo: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
+    readonly rollNumber: FieldRef<"User", 'String'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -2135,8 +2135,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     mobileNo: string | null
-    role: string | null
     createdAt: Date | null
+    role: string | null
     updatedAt: Date | null
   }
 
@@ -2146,8 +2146,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     mobileNo: string | null
-    role: string | null
     createdAt: Date | null
+    role: string | null
     updatedAt: Date | null
   }
 
@@ -2157,8 +2157,8 @@ export namespace Prisma {
     email: number
     password: number
     mobileNo: number
-    role: number
     createdAt: number
+    role: number
     updatedAt: number
     _all: number
   }
@@ -2170,8 +2170,8 @@ export namespace Prisma {
     email?: true
     password?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    role?: true
     updatedAt?: true
   }
 
@@ -2181,8 +2181,8 @@ export namespace Prisma {
     email?: true
     password?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    role?: true
     updatedAt?: true
   }
 
@@ -2192,8 +2192,8 @@ export namespace Prisma {
     email?: true
     password?: true
     mobileNo?: true
-    role?: true
     createdAt?: true
+    role?: true
     updatedAt?: true
     _all?: true
   }
@@ -2276,8 +2276,8 @@ export namespace Prisma {
     email: string
     password: string
     mobileNo: string | null
-    role: string
     createdAt: Date
+    role: string
     updatedAt: Date
     _count: AdminCountAggregateOutputType | null
     _min: AdminMinAggregateOutputType | null
@@ -2304,8 +2304,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    role?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2315,8 +2315,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    role?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2326,8 +2326,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    role?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2337,12 +2337,12 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     mobileNo?: boolean
-    role?: boolean
     createdAt?: boolean
+    role?: boolean
     updatedAt?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "mobileNo" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "mobileNo" | "createdAt" | "role" | "updatedAt", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
@@ -2353,8 +2353,8 @@ export namespace Prisma {
       email: string
       password: string
       mobileNo: string | null
-      role: string
       createdAt: Date
+      role: string
       updatedAt: Date
     }, ExtArgs["result"]["admin"]>
     composites: {}
@@ -2784,8 +2784,8 @@ export namespace Prisma {
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
     readonly mobileNo: FieldRef<"Admin", 'String'>
-    readonly role: FieldRef<"Admin", 'String'>
     readonly createdAt: FieldRef<"Admin", 'DateTime'>
+    readonly role: FieldRef<"Admin", 'String'>
     readonly updatedAt: FieldRef<"Admin", 'DateTime'>
   }
     
@@ -3170,9 +3170,6 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    email: 'email',
-    password: 'password',
-    rollNumber: 'rollNumber',
     age: 'age',
     gender: 'gender',
     aadhar: 'aadhar',
@@ -3180,8 +3177,11 @@ export namespace Prisma {
     college: 'college',
     depo: 'depo',
     mobileNo: 'mobileNo',
-    role: 'role',
     createdAt: 'createdAt',
+    email: 'email',
+    password: 'password',
+    role: 'role',
+    rollNumber: 'rollNumber',
     updatedAt: 'updatedAt'
   };
 
@@ -3194,8 +3194,8 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     mobileNo: 'mobileNo',
-    role: 'role',
     createdAt: 'createdAt',
+    role: 'role',
     updatedAt: 'updatedAt'
   };
 
@@ -3296,9 +3296,6 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
-    email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    rollNumber?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     gender?: StringNullableFilter<"User"> | string | null
     aadhar?: StringNullableFilter<"User"> | string | null
@@ -3306,17 +3303,17 @@ export namespace Prisma {
     college?: StringNullableFilter<"User"> | string | null
     depo?: StringNullableFilter<"User"> | string | null
     mobileNo?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
+    rollNumber?: StringNullableFilter<"User"> | string | null
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    rollNumber?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     aadhar?: SortOrderInput | SortOrder
@@ -3324,38 +3321,38 @@ export namespace Prisma {
     college?: SortOrderInput | SortOrder
     depo?: SortOrderInput | SortOrder
     mobileNo?: SortOrderInput | SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    rollNumber?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    email?: string
-    rollNumber?: string
     aadhar?: string
     mobileNo?: string
+    email?: string
+    rollNumber?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
     age?: IntNullableFilter<"User"> | number | null
     gender?: StringNullableFilter<"User"> | string | null
     course?: StringNullableFilter<"User"> | string | null
     college?: StringNullableFilter<"User"> | string | null
     depo?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
+    password?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-  }, "id" | "email" | "rollNumber" | "aadhar" | "mobileNo">
+  }, "id" | "aadhar" | "mobileNo" | "email" | "rollNumber">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    rollNumber?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     aadhar?: SortOrderInput | SortOrder
@@ -3363,8 +3360,11 @@ export namespace Prisma {
     college?: SortOrderInput | SortOrder
     depo?: SortOrderInput | SortOrder
     mobileNo?: SortOrderInput | SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    rollNumber?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -3379,9 +3379,6 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
-    rollNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
     age?: IntNullableWithAggregatesFilter<"User"> | number | null
     gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     aadhar?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -3389,8 +3386,11 @@ export namespace Prisma {
     college?: StringNullableWithAggregatesFilter<"User"> | string | null
     depo?: StringNullableWithAggregatesFilter<"User"> | string | null
     mobileNo?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    role?: StringWithAggregatesFilter<"User"> | string
+    rollNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -3403,8 +3403,8 @@ export namespace Prisma {
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     mobileNo?: StringNullableFilter<"Admin"> | string | null
-    role?: StringFilter<"Admin"> | string
     createdAt?: DateTimeFilter<"Admin"> | Date | string
+    role?: StringFilter<"Admin"> | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
   }
 
@@ -3414,8 +3414,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     mobileNo?: SortOrderInput | SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    role?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -3428,8 +3428,8 @@ export namespace Prisma {
     NOT?: AdminWhereInput | AdminWhereInput[]
     name?: StringNullableFilter<"Admin"> | string | null
     password?: StringFilter<"Admin"> | string
-    role?: StringFilter<"Admin"> | string
     createdAt?: DateTimeFilter<"Admin"> | Date | string
+    role?: StringFilter<"Admin"> | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
   }, "id" | "email" | "mobileNo">
 
@@ -3439,8 +3439,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     mobileNo?: SortOrderInput | SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    role?: SortOrder
     updatedAt?: SortOrder
     _count?: AdminCountOrderByAggregateInput
     _max?: AdminMaxOrderByAggregateInput
@@ -3456,17 +3456,14 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
     mobileNo?: StringNullableWithAggregatesFilter<"Admin"> | string | null
-    role?: StringWithAggregatesFilter<"Admin"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+    role?: StringWithAggregatesFilter<"Admin"> | string
     updatedAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
   }
 
   export type UserCreateInput = {
     id?: string
     name?: string | null
-    email: string
-    password: string
-    rollNumber?: string | null
     age?: number | null
     gender?: string | null
     aadhar?: string | null
@@ -3474,17 +3471,17 @@ export namespace Prisma {
     college?: string | null
     depo?: string | null
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    email: string
+    password: string
+    role?: string
+    rollNumber?: string | null
     updatedAt?: Date | string
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     name?: string | null
-    email: string
-    password: string
-    rollNumber?: string | null
     age?: number | null
     gender?: string | null
     aadhar?: string | null
@@ -3492,17 +3489,17 @@ export namespace Prisma {
     college?: string | null
     depo?: string | null
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    email: string
+    password: string
+    role?: string
+    rollNumber?: string | null
     updatedAt?: Date | string
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3510,17 +3507,17 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3528,17 +3525,17 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyInput = {
     id?: string
     name?: string | null
-    email: string
-    password: string
-    rollNumber?: string | null
     age?: number | null
     gender?: string | null
     aadhar?: string | null
@@ -3546,17 +3543,17 @@ export namespace Prisma {
     college?: string | null
     depo?: string | null
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    email: string
+    password: string
+    role?: string
+    rollNumber?: string | null
     updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3564,17 +3561,17 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     aadhar?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3582,8 +3579,11 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     depo?: NullableStringFieldUpdateOperationsInput | string | null
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3593,8 +3593,8 @@ export namespace Prisma {
     email: string
     password: string
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    role?: string
     updatedAt?: Date | string
   }
 
@@ -3604,8 +3604,8 @@ export namespace Prisma {
     email: string
     password: string
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    role?: string
     updatedAt?: Date | string
   }
 
@@ -3615,8 +3615,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3626,8 +3626,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3637,8 +3637,8 @@ export namespace Prisma {
     email: string
     password: string
     mobileNo?: string | null
-    role?: string
     createdAt?: Date | string
+    role?: string
     updatedAt?: Date | string
   }
 
@@ -3648,8 +3648,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3659,8 +3659,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3724,9 +3724,6 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    rollNumber?: SortOrder
     age?: SortOrder
     gender?: SortOrder
     aadhar?: SortOrder
@@ -3734,8 +3731,11 @@ export namespace Prisma {
     college?: SortOrder
     depo?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    rollNumber?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -3746,9 +3746,6 @@ export namespace Prisma {
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    rollNumber?: SortOrder
     age?: SortOrder
     gender?: SortOrder
     aadhar?: SortOrder
@@ -3756,17 +3753,17 @@ export namespace Prisma {
     college?: SortOrder
     depo?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    rollNumber?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    rollNumber?: SortOrder
     age?: SortOrder
     gender?: SortOrder
     aadhar?: SortOrder
@@ -3774,8 +3771,11 @@ export namespace Prisma {
     college?: SortOrder
     depo?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    rollNumber?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -3855,8 +3855,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    role?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -3866,8 +3866,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    role?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -3877,8 +3877,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     mobileNo?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
+    role?: SortOrder
     updatedAt?: SortOrder
   }
 
