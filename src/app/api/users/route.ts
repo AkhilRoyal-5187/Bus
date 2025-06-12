@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
+import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -75,11 +76,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Add a default role if not provided in Excel, and ensure 'password' is not undefined if optional in schema
-    const usersToCreate = newUsers.map((user: any) => ({
-      ...user,
-      role: user.role || "student", // Ensure a default role
-      password: user.password || "default_password_123", // Set a default password if none is provided.
-                                                        // IMPORTANT: In a real app, hash this password!
+    const usersToCreate = await Promise.all(newUsers.map(async (user: any) => {
+      // Use roll number as password if not provided
+      const password = user.password || user.rollNumber;
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      return {
+        ...user,
+        role: user.role || "student",
+        password: hashedPassword,
+        email: user.email || `${user.rollNumber}@student.com`, // Ensure email is set
+      };
     }));
 
 

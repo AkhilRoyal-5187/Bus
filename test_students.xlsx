@@ -1,0 +1,4 @@
+Id,Name,Email,RollNumber,Age,Gender,Aadhar,Course,Mobile no,College,Depo
+1,John Doe,john.doe@test.com,2024001,20,Male,123456789012,Computer Science,9876543210,Test College,Depot 1
+2,Jane Smith,jane.smith@test.com,2024002,21,Female,234567890123,Electrical,8765432109,Test College,Depot 2
+3,Bob Wilson,bob.wilson@test.com,2024003,19,Male,345678901234,Mechanical,7654321098,Test College,Depot 1 

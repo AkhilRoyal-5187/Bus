@@ -65,7 +65,10 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
+    console.log("Stored hashed password:", user.password);
+    console.log("Attempting to compare with provided password:", password);
     const isValidPassword = await bcrypt.compare(password, user.password);
+    console.log("Password comparison result:", isValidPassword);
 
     if (!isValidPassword) {
       console.log("Invalid password");
