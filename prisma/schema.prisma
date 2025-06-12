@@ -39,3 +39,4 @@ model Admin {
   role      String   @default("admin")
   updatedAt DateTime @updatedAt
 }
+
