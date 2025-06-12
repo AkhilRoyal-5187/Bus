@@ -44,8 +44,8 @@ export default function StudentLogin() {
                 throw new Error(data.error || "Login failed");
             }
 
-            // Store the token in a cookie
-            document.cookie = `token=${data.token}; path=/`;
+            // The server will set the HTTP-only cookie
+            // No need to manually set document.cookie
 
             // Redirect to student dashboard
             router.push("/studentdash");

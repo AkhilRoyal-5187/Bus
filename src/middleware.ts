@@ -33,12 +33,13 @@ export async function middleware(request: NextRequest) {
   // These are paths that ANYONE can access without a valid JWT.
   const publicPaths = [
     "/admin",               // The actual admin login page (e.g., your login form)
+    "/student",            // The student login page
     "/api/admin/login",     // The API endpoint for admin login (must be public)
     "/api/admin/logout",    // The API endpoint for admin logout (must be public)
+    "/api/auth/login",      // The API endpoint for student login
     "/",                    // Your public homepage (if it exists)
     "/signup",              // A general user signup page (if it exists)
     "/api/auth/signup",     // A general user signup API (if it exists)
-    "/api/auth/login",      // A general user login API (if it exists, separate from admin)
     // Add other public routes here as needed (e.g., /about, /contact, /public/* etc.)
   ];
 
@@ -62,11 +63,12 @@ export async function middleware(request: NextRequest) {
   // --- Protected Route Logic ---
   // If we reach here, the path is NOT public, so we need a token.
 
-  // If no token is found in the cookies, redirect to the admin login page.
+  // If no token is found in the cookies, redirect to the appropriate login page based on the path
   if (!token) {
-    console.log(`Middleware: No token found for protected path: '${pathname}'. Redirecting to /admin.`);
-    // Construct the URL to redirect to the login page
-    return NextResponse.redirect(new URL("/admin", request.url));
+    console.log(`Middleware: No token found for protected path: '${pathname}'. Redirecting to appropriate login page.`);
+    // Redirect to student login for student routes, admin login for admin routes
+    const redirectPath = pathname.startsWith("/student") ? "/student" : "/admin";
+    return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 
   // If a token is found, attempt to verify it.
@@ -92,7 +94,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith("/student") || pathname.startsWith("/studentdash")) {
       if (role !== "student") {
         console.log(`Middleware: Unauthorized access attempt to student area by role: '${role}'. Redirecting.`);
-        return NextResponse.redirect(new URL("/admin", request.url)); // Or a student-specific login
+        return NextResponse.redirect(new URL("/student", request.url));
       }
     }
 

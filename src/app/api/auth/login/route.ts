@@ -87,16 +87,26 @@ export async function POST(request: Request) {
     );
 
     console.log("Login successful");
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: "Login successful",
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
         role: role
-      },
-      token
+      }
     });
+
+    // Set HTTP-only cookie
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, // 24 hours in seconds
+      path: '/',
+      sameSite: 'lax',
+    });
+
+    return response;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
