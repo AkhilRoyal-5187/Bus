@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface User {
   id?: string;
@@ -15,7 +16,8 @@ interface User {
   depo?: string;
 }
 
-export default function AdminDash() {
+export default function AdminDashboard() {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [previewUsers, setPreviewUsers] = useState<User[]>([]);
   const [users, setUsers] = useState<User[]>([]);

@@ -1,11 +1,11 @@
-import AdminLogin  from "../components/adminLogin";
+"use client";
 
-export default function Admin(){
-    return(
-        <div>
-            <div className="flex justify-center w-full h-screen">
-                <AdminLogin/>
-            </div>
-        </div>
-    )
-};
+import AdminLogin from "../components/adminLogin";
+
+export default function Admin() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <AdminLogin />
+    </div>
+  );
+}

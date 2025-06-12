@@ -58,89 +58,75 @@ export default function AdminLogin() {
   };
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
-      y: 0,
+      scale: 1,
       transition: {
         duration: 0.5,
+        ease: "easeOut",
+        when: "beforeChildren",
         staggerChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
   };
 
   return (
-    <motion.form
-      onSubmit={handleSubmit}
-      className="space-y-6 w-full max-w-md"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.div variants={itemVariants}>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          value={formData.email}
-          onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          value={formData.password}
-          onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </motion.div>
-
-      {error && (
-        <motion.div
-          variants={itemVariants}
-          className="text-red-500 text-sm mt-2"
-        >
-          {error}
-        </motion.div>
-      )}
-
-      <motion.button
-        variants={itemVariants}
-        type="submit"
-        disabled={isLoading}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+    <div className="min-h-screen min-w-screen bg-black flex items-center justify-center px-4">
+      <motion.div
+        className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 sm:p-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        {isLoading ? "Logging in..." : "Login"}
-      </motion.button>
-    </motion.form>
+        <motion.h1 variants={itemVariants} className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gray-900">Admin Login</motion.h1>
+
+        {error && (
+          <motion.div
+            variants={itemVariants}
+            className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline">{error}</span>
+          </motion.div>
+        )}
+
+        <motion.form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <motion.input
+            variants={itemVariants}
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            required
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <motion.input
+            variants={itemVariants}
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            placeholder="Password"
+            required
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <motion.button
+            variants={itemVariants}
+            type="submit"
+            disabled={isLoading}
+            className="bg-blue-600 text-white rounded-lg py-3 font-semibold hover:bg-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </motion.button>
+        </motion.form>
+      </motion.div>
+    </div>
   );
 }
