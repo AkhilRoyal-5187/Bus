@@ -36,22 +36,25 @@ export default function AdminLogin() {
         body: JSON.stringify(formData),
       });
 
-      console.log("Response status:", response.status);
-      const data = await response.json();
-      console.log("Response data:", { ...data, token: data.token ? "[REDACTED]" : undefined });
+      console.log("Login API response status:", response.status);
+      const data = await response.json(); // Still parse JSON to get 'message' or 'error'
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed");
+        // If login fails, data.error will contain the message from backend
+        throw new Error(data.error || "Login failed due to unexpected error.");
       }
 
-      // Store the token in a cookie
-      document.cookie = `token=${data.token}; path=/`;
+      console.log("Login successful. Backend set HTTP-only cookie.");
+      // IMPORTANT: No need to manually set document.cookie here.
+      // The backend has already sent the Set-Cookie header for the HTTP-only token.
+      // The browser automatically handles storing this cookie.
 
       // Redirect to admin dashboard
       router.push("/admindash");
     } catch (err) {
-      console.error("Login error:", err);
-      setError(err instanceof Error ? err.message : "An error occurred during login");
+      console.error("Login error during fetch or response processing:", err);
+      // Display the error message to the user
+      setError(err instanceof Error ? err.message : "An unknown error occurred during login.");
     } finally {
       setIsLoading(false);
     }

@@ -4,10 +4,13 @@ import * as XLSX from "xlsx";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+// Updated User Interface to include Id, Email, RollNumber, and correct age type
 interface User {
-  id?: string;
+  id?: string;        // Matches 'Id' from Excel
   name?: string;
-  age?: string;
+  email?: string;     // Matches 'Email' from Excel
+  rollNumber?: string; // Matches 'RollNumber' from Excel
+  age?: number;       // Changed to 'number' to match Prisma's Int?
   gender?: string;
   aadhar?: string;
   course?: string;
@@ -23,6 +26,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<User[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // State for logout loading
 
   useEffect(() => {
     fetchUsers();
@@ -34,12 +38,17 @@ export default function AdminDashboard() {
       const res = await fetch("/api/users", { cache: "no-store" });
 
       if (!res.ok) {
+        console.error(`Failed to fetch users: ${res.statusText} (${res.status})`);
+        // If the API explicitly returns unauthorized, force redirect to login
+        if (res.status === 401 || res.status === 403) {
+            router.push("/admin");
+        }
         throw new Error(`Failed to fetch users: ${res.statusText}`);
       }
 
       const data = await res.json();
       setUsers(data);
-      setPreviewUsers([]);
+      setPreviewUsers([]); // Clear preview after fetching fresh data
     } catch (error) {
       console.error("Fetch users error:", error);
       alert("Failed to load users from DB. Check console.");
@@ -48,15 +57,45 @@ export default function AdminDashboard() {
     }
   }
 
+  // Handle Logout Functionality
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      console.log("Attempting to log out...");
+      const response = await fetch("/api/admin/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Logout failed on the server.");
+      }
+
+      console.log("Logout successful. Redirecting to login page.");
+      router.push("/admin"); // Redirect to the admin login page
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("Failed to log out. Please try again.");
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
+  // Corrected keyMap to exactly match Excel headers (including case and spaces)
   const keyMap: Record<string, keyof User> = {
-    name: "name",
-    age: "age",
-    gender: "gender",
-    aadhar: "aadhar",
-    course: "course",
-    "mobile no": "mobileNo",
-    college: "college",
-    depo: "depo",
+    "Id": "id",
+    "Name": "name",
+    "Email": "email",
+    "RollNumber": "rollNumber",
+    "Age": "age",
+    "Gender ": "gender",   // Matches "Gender " from Excel
+    "Aadhar ": "aadhar",   // Matches "Aadhar " from Excel
+    "Course": "course",
+    "Mobile no": "mobileNo", // Matches "Mobile no" from Excel
+    "College": "college",
+    "Depo": "depo",
   };
 
   function previewData() {
@@ -66,18 +105,36 @@ export default function AdminDashboard() {
     reader.onload = (e) => {
       const data = new Uint8Array(e.target?.result as ArrayBuffer);
       const workbook = XLSX.read(data, { type: "array" });
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]]; // Assumes data in the first sheet
       const jsonData = XLSX.utils.sheet_to_json<Record<string, any>>(worksheet);
+
+      // --- Debugging Logs for Excel Data ---
+      console.log("Raw JSON data from Excel (before mapping):", jsonData);
+      // --- End Debugging Logs ---
 
       const formattedData = jsonData.map((row) => {
         const user: User = {};
         for (const key in keyMap) {
-          user[keyMap[key]] = row[key] || "";
+          if (row[key] !== undefined) {
+            const frontendKey = keyMap[key];
+            const rawValue = row[key];
+
+            // Special handling for 'age' to ensure it's a number or undefined
+            if (frontendKey === 'age') {
+              const parsedAge = parseInt(String(rawValue), 10);
+              // Set to number if valid, otherwise undefined
+              user[frontendKey] = isNaN(parsedAge) ? undefined : parsedAge;
+            } else {
+              // Ensure all other values are strings
+              user[frontendKey] = String(rawValue);
+            }
+          }
         }
         return user;
       });
 
-      setPreviewUsers(formattedData);
+      console.log("Formatted data after mapping:", formattedData); // Debugging
+      setPreviewUsers(formattedData as User[]); // Explicit cast for safety
     };
     reader.readAsArrayBuffer(file);
   }
@@ -93,16 +150,16 @@ export default function AdminDashboard() {
         body: JSON.stringify(previewUsers),
       });
 
-      if (!res.ok) throw new Error("Upload failed");
+      if (!res.ok) throw new Error(`Upload failed: ${res.statusText}`);
       const result = await res.json();
 
       alert(`✅ Uploaded ${result.count} users`);
-      await fetchUsers();
-      setPreviewUsers([]);
-      setFile(null);
+      await fetchUsers(); // Re-fetch users after successful upload
+      setPreviewUsers([]); // Clear preview after saving
+      setFile(null);      // Clear selected file
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Upload failed");
+      alert("Upload failed. Check console for details.");
     } finally {
       setIsUploading(false);
     }
@@ -113,7 +170,7 @@ export default function AdminDashboard() {
     setFile(null);
   }
 
-  // Motion variants
+  // Motion variants (unchanged)
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.98 },
     visible: {
@@ -144,6 +201,9 @@ export default function AdminDashboard() {
     },
   };
 
+  const tableHeaders = ["Id", "Name", "Email", "Roll Number", "Age", "Gender", "Aadhar", "Course", "Mobile No", "College", "Depo"];
+  const totalColumns = tableHeaders.length; // Used for colSpan
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
       <motion.div
@@ -152,6 +212,20 @@ export default function AdminDashboard() {
         initial="hidden"
         animate="visible"
       >
+        {/* LOGOUT BUTTON */}
+        <motion.div variants={itemVariants} className="flex justify-end mb-4">
+          <motion.button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded-xl font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {isLoggingOut ? "Logging Out..." : "Logout"}
+          </motion.button>
+        </motion.div>
+        {/* END LOGOUT BUTTON */}
+
         <motion.div variants={itemVariants}>
           <label htmlFor="file_input" className="block mb-2 text-sm font-medium text-white">
             Upload Excel File
@@ -163,18 +237,18 @@ export default function AdminDashboard() {
             onChange={(e) => {
               const selected = e.target.files?.[0] || null;
               setFile(selected);
-              if (selected) previewData();
+              if (selected) previewData(); // Auto-preview when file is selected
             }}
             className="block w-full text-white border border-gray-600 rounded-lg cursor-pointer bg-gray-700 focus:outline-none placeholder-gray-400"
           />
           <p className="mt-1 text-sm text-gray-400">
-            Excel fields: name, age, gender, aadhar, course, mobile no, college, depo
+            Excel fields: Id, Name, Email, RollNumber, Age, Gender, Aadhar, Course, Mobile no, College, Depo
           </p>
         </motion.div>
 
         <motion.div className="flex flex-wrap justify-center mt-6 gap-5 font-semibold text-white" variants={itemVariants}>
           <motion.button
-            onClick={previewData}
+            onClick={previewData} // Manual preview button
             className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -221,7 +295,7 @@ export default function AdminDashboard() {
               <table className="w-full text-sm text-left text-gray-300">
                 <thead className="text-xs text-gray-200 uppercase bg-gray-800">
                   <tr>
-                    {["Name", "Age", "Gender", "Aadhar", "Course", "Mobile No", "College", "Depo"].map((h) => (
+                    {tableHeaders.map((h) => (
                       <th key={h} className="px-6 py-3">{h}</th>
                     ))}
                   </tr>
@@ -229,7 +303,10 @@ export default function AdminDashboard() {
                 <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
                   {previewUsers.map((user, idx) => (
                     <motion.tr key={idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
+                      <td className="px-6 py-3 text-white">{user.id}</td>
                       <td className="px-6 py-3 text-white">{user.name}</td>
+                      <td className="px-6 py-3 text-white">{user.email}</td>
+                      <td className="px-6 py-3 text-white">{user.rollNumber}</td>
                       <td className="px-6 py-3 text-white">{user.age}</td>
                       <td className="px-6 py-3 text-white">{user.gender}</td>
                       <td className="px-6 py-3 text-white">{user.aadhar}</td>
@@ -254,7 +331,7 @@ export default function AdminDashboard() {
             <table className="w-full text-sm text-left text-gray-300">
               <thead className="text-xs text-gray-200 uppercase bg-gray-800">
                 <tr>
-                  {["Id", "Name", "Age", "Gender", "Aadhar", "Course", "Mobile No", "College", "Depo"].map((h) => (
+                  {tableHeaders.map((h) => (
                     <th key={h} className="px-6 py-3">{h}</th>
                   ))}
                 </tr>
@@ -262,13 +339,15 @@ export default function AdminDashboard() {
               <motion.tbody variants={tbodyVariants} initial="hidden" animate="visible">
                 {users.length === 0 ? (
                   <motion.tr variants={rowVariants}>
-                    <td colSpan={9} className="px-6 py-3 text-center text-white">No data available</td>
+                    <td colSpan={totalColumns} className="px-6 py-3 text-center text-white">No data available</td>
                   </motion.tr>
                 ) : (
                   users.map((user, idx) => (
                     <motion.tr key={user.id ?? idx} variants={rowVariants} className="bg-gray-900 border-b border-gray-700">
                       <td className="px-6 py-3 text-white">{user.id}</td>
                       <td className="px-6 py-3 text-white">{user.name}</td>
+                      <td className="px-6 py-3 text-white">{user.email}</td>
+                      <td className="px-6 py-3 text-white">{user.rollNumber}</td>
                       <td className="px-6 py-3 text-white">{user.age}</td>
                       <td className="px-6 py-3 text-white">{user.gender}</td>
                       <td className="px-6 py-3 text-white">{user.aadhar}</td>

@@ -1197,7 +1197,7 @@ export namespace Prisma {
     mobileNo: string | null
     createdAt: Date
     email: string
-    password: string
+    password: string | null
     role: string
     rollNumber: string | null
     updatedAt: Date
@@ -1311,7 +1311,7 @@ export namespace Prisma {
       mobileNo: string | null
       createdAt: Date
       email: string
-      password: string
+      password: string | null
       role: string
       rollNumber: string | null
       updatedAt: Date
@@ -3305,7 +3305,7 @@ export namespace Prisma {
     mobileNo?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     role?: StringFilter<"User"> | string
     rollNumber?: StringNullableFilter<"User"> | string | null
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -3323,7 +3323,7 @@ export namespace Prisma {
     mobileNo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     role?: SortOrder
     rollNumber?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
@@ -3345,7 +3345,7 @@ export namespace Prisma {
     college?: StringNullableFilter<"User"> | string | null
     depo?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     role?: StringFilter<"User"> | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "aadhar" | "mobileNo" | "email" | "rollNumber">
@@ -3362,7 +3362,7 @@ export namespace Prisma {
     mobileNo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     role?: SortOrder
     rollNumber?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
@@ -3388,7 +3388,7 @@ export namespace Prisma {
     mobileNo?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: StringWithAggregatesFilter<"User"> | string
     rollNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -3473,7 +3473,7 @@ export namespace Prisma {
     mobileNo?: string | null
     createdAt?: Date | string
     email: string
-    password: string
+    password?: string | null
     role?: string
     rollNumber?: string | null
     updatedAt?: Date | string
@@ -3491,7 +3491,7 @@ export namespace Prisma {
     mobileNo?: string | null
     createdAt?: Date | string
     email: string
-    password: string
+    password?: string | null
     role?: string
     rollNumber?: string | null
     updatedAt?: Date | string
@@ -3509,7 +3509,7 @@ export namespace Prisma {
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3527,7 +3527,7 @@ export namespace Prisma {
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3545,7 +3545,7 @@ export namespace Prisma {
     mobileNo?: string | null
     createdAt?: Date | string
     email: string
-    password: string
+    password?: string | null
     role?: string
     rollNumber?: string | null
     updatedAt?: Date | string
@@ -3563,7 +3563,7 @@ export namespace Prisma {
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3581,7 +3581,7 @@ export namespace Prisma {
     mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     rollNumber?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

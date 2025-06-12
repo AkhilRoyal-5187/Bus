@@ -1,7 +1,9 @@
+// prisma/schema.prisma
+
 generator client {
-  provider      = "prisma-client-js"
-  output        = "../src/generated/prisma"
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  binaryTargets   = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -21,7 +23,7 @@ model User {
   mobileNo   String?  @unique
   createdAt  DateTime @default(now())
   email      String   @unique
-  password   String
+  password   String?  // <-- This is now optional for import flexibility
   role       String   @default("student")
   rollNumber String?  @unique
   updatedAt  DateTime @updatedAt
