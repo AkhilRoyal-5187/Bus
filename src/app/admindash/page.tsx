@@ -58,7 +58,6 @@ export default function AdminDashboard() {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
-  // --- NEW --- States for the "Add New User" feature
   const [isAddingNewUser, setIsAddingNewUser] = useState(false);
   const [newUser, setNewUser] = useState<Partial<User>>(initialNewUserState);
 
