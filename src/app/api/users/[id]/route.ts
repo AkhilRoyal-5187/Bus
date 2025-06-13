@@ -1,9 +1,7 @@
 // app/api/users/route.ts
 
 import { NextResponse, NextRequest } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 // --- Handler for CREATING a new user (POST request) ---
 export async function POST(request: Request) {

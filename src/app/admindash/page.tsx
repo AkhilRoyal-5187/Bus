@@ -70,7 +70,7 @@ export default function AdminDashboard() {
       if (!res.ok) {
         console.error(`Failed to fetch users: ${res.statusText} (${res.status})`);
         if (res.status === 401 || res.status === 403) {
-          router.push("/admin");
+            router.push("/admin");
         }
         throw new Error(`Failed to fetch users: ${res.statusText}`);
       }
