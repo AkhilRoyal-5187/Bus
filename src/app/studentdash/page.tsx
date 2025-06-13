@@ -52,14 +52,14 @@ export default function StudentDash() {
             transition: {
                 staggerChildren: 0.3, // Increased stagger for more distinct entry
                 duration: 0.6,
-                ease: "easeOut",
+                ease: "easeOut" as const,
             },
         },
     };
 
     const itemVariants = {
         hidden: { opacity: 0, y: 40 }, // Increased y for more noticeable slide
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
     };
 
     const buttonHoverTap = {
